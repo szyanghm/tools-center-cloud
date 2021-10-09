@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: tools-center-eureka
+  profiles:
+    active: prod
+

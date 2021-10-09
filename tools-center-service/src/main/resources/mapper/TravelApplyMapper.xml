@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tools.center.mapper.TravelApplyMapper">
+    <update id="updateState">
+        update tc_travel_apply set state=#{state} WHERE process_id=#{processId}
+    </update>
+
+
+    <select id="findPageList" resultType="com.tools.center.vo.TravelApplyVO">
+        select
+         ta.id,
+         ta.process_id,
+         tu.username,
+         ta.`name`,
+         ta.approver,
+         ta.num,
+         ta.begin_date,
+         ta.end_date,
+         ta.state,
+         ta.start_address,
+         ta.end_address,
+         ta.description
+         from tc_travel_apply as ta
+        INNER JOIN tc_user as tu on ta.created_by=tu.id
+        WHERE tu.deleted=0 and ta.deleted=0 and ta.user_id=#{userId}
+    </select>
+</mapper>

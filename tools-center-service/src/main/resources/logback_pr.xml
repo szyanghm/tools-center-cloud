@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 生产配置，采用不清除日志配置,日志将打成zip压缩包存放 -->
+<configuration>
+
+    <property scope="local" name="LOG_FILE" value="D:\\data\\javaLog" />
+
+    <!-- info日志打印配置 -->
+    <appender name="infoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>
+        <File>${LOG_FILE}/tools_center_service_info.log</File>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss,SSS} [%t] [%c] [%p] - %m%n}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${USER_HOME}/tools_center_service_info.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+    <!-- error日志打印配置 -->
+    <appender name="errorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>
+        <File>${LOG_FILE}/tools_center_service_error.log</File>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss,SSS} [%t] [%c] [%p] - %m%n}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${USER_HOME}/tools_center_service_error.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="org.spring" level="ERROR"/>
+    <logger name="org.apache" level="ERROR"/>
+    <logger name="org.springframework" level="ERROR"/>
+
+
+    <root level="DEBUG">
+        <appender-ref ref="infoLog"/>
+        <appender-ref ref="errorLog"/>
+    </root>
+</configuration>

@@ -1,0 +1,84 @@
+server:
+  port: 8081
+# 服务注册与发现相关配置
+eureka:
+  #自定义实例编号
+  instance:
+    hostname: www.tools-center.eureka.com
+  #instance-id: ${eureka.instance.ip-address}:${server.port}
+    # 优先使用IP地址方式进行注册服务
+    #prefer-ip-address: true
+    #ip-address: 127.0.0.1
+  client:
+    # 服务注册地址
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8772/eureka/
+spring:
+  datasource:
+    #配置hikari连接池
+    hikari:
+      minimum-idle: 4
+      maximum-pool-size: 16
+      connection-timeout: 10000
+      idle-timeout: 30000
+      connection-init-sql: set names utf8mb4
+    #动态数据源配置
+    dynamic:
+      #主数据源
+      primary: activiti
+      strict: false
+      datasource:
+        #数据源1
+        activiti:
+          url: jdbc:mysql://localhost:3306/sc_activiti?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&nullCatalogMeansCurrent=true
+          username: root
+          password: 123456
+          driver-class-name: com.mysql.cj.jdbc.Driver
+  activiti:
+    #默认值false, true表存在直接使用，不存在会重新创建
+    database-schema-update: true
+    #activiti7 默认false不生成历史信息表，true开启历史表
+    db-history-used: true
+    #none: 不保存任何历史数据，因此在流程执行中是最高效的
+    #activity: 级别高于none,保存流程实例与流程行为，其它数据不保存
+    #audit:除activity级别会保存的数据外，还会保存全部流程任务及其属性，audit为history的默认值
+    #full:保存历史数据的最高级别，除了会保存audit级别的数据外，还会保存其它全部流程相关的细节数据，包括一些流程参数等
+    history-level: full
+    check-process-definitions: false
+    use-strong-uuids: false
+  redis:
+    password:
+    lettuce:
+      pool:
+        max-active: 5000
+        max-wait: -1
+        max-idle: 30
+        min-idle: 5
+    timeout: 5000
+    host: 192.168.124.128
+    port: 6379
+  session:
+    store-type: redis
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*Mapper.xml
+  global-config:
+    # 数据库相关配置
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: assign_uuid
+      logic-delete-value: 0 #逻辑删除:0无效，1有效
+      logic-not-delete-value: 1 #逻辑删除:0有效，1无效
+      table-underline: true    #驼峰下划线转换
+      #table-prefix: tc_  #表名前缀
+    #刷新mapper 调试神器
+    refresh: true
+  # 原生配置
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true  #驼峰命名映射:true开启，false关闭
+    cache-enabled: false #二级缓存:true开启，false关闭
+redis_prefix: tc_
+aes_key: tools-center-cloud-aes-key
+logging:
+  config: classpath:logback.xml

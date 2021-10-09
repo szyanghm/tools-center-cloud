@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tools.center.mapper.ApproverMapper">
+
+
+    <select id="findList" resultType="com.tools.center.vo.ApproverVO">
+        SELECT
+            a.id,
+            a.user_id,
+            u.`nickname`,
+            u.username
+        FROM
+            tc_approver AS a
+        LEFT JOIN tc_user u ON a.user_id = u.id
+        WHERE
+            a.deleted = 0
+        AND u.deleted = 0
+        AND (
+            u.`nickname` LIKE CONCAT('%', #{name}, '%')
+            OR u.username LIKE CONCAT('%', #{name}, '%')
+        )
+    </select>
+</mapper>

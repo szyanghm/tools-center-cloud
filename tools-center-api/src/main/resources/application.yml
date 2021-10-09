@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: tools-center-api
+  profiles:
+    active: prod
+  main:
+    allow-bean-definition-overriding: true

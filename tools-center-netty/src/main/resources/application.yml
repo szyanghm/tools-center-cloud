@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: billowing-netty
+  main:
+    allow-bean-definition-overriding: true #当遇到同名时，是否允许覆盖注册
+  profiles:
+    active: dev
+

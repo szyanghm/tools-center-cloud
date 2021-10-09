@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: tools-center-service
+  profiles:
+    active: prod
+

@@ -1,0 +1,70 @@
+server:
+  port: 18080
+# 服务注册与发现相关配置
+eureka:
+  #自定义实例编号
+  instance:
+    hostname: tools-center.com
+  # instance-id: ${eureka.instance.ip-address}:${server.port}
+    # 优先使用IP地址方式进行注册服务
+    # prefer-ip-address: true
+  # ip-address: 127.0.0.1
+  client:
+    # 服务注册地址
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8772/eureka/
+spring:
+  datasource:
+    #配置hikari连接池
+    hikari:
+      minimum-idle: 4
+      maximum-pool-size: 16
+      connection-timeout: 10000
+      idle-timeout: 30000
+      connection-init-sql: set names utf8mb4
+    #动态数据源配置
+    dynamic:
+      #主数据源
+      primary: admin
+      strict: false
+      datasource:
+        #数据源2
+        admin:
+          url: jdbc:mysql://tools-center.com:3308/sys_admin?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+
+  redis:
+    password:
+    lettuce:
+      pool:
+        max-active: 5000
+        max-wait: -1
+        max-idle: 30
+        min-idle: 5
+    timeout: 5000
+    host: 192.168.124.128
+    port: 6379
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*Mapper.xml
+  global-config:
+    # 数据库相关配置
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: assign_uuid
+      logic-delete-value: 0 #逻辑删除:0无效，1有效
+      logic-not-delete-value: 1 #逻辑删除:0有效，1无效
+      table-underline: true    #驼峰下划线转换
+      #table-prefix: tc_  #表名前缀
+    #刷新mapper 调试神器
+    refresh: true
+  # 原生配置
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true  #驼峰命名映射:true开启，false关闭
+    cache-enabled: false #二级缓存:true开启，false关闭
+redis_prefix: tc_
+logging:
+  config: classpath:logback.xml

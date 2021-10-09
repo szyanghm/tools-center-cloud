@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tools.center.mapper.FlowMapper">
+
+
+    <update id="updateState">
+        update tc_flow
+        set state = #{dto.state}
+        <if test="dto.flowId!=null and dto.flowId!=''">
+            ,flow_id=#{dto.flowId}
+        </if>
+        <if test="dto.flowName!=null and dto.flowName!=''">
+            ,flow_name=#{dto.flowName}
+        </if>
+        <if test="dto.flowKey!=null and dto.flowKey!=''">
+            ,flow_key=#{dto.flowKey}
+        </if>
+        <if test="dto.modelId!=null and dto.modelId!=''">
+            ,model_id=#{dto.modelId}
+        </if>
+        where
+        id=#{dto.id}
+    </update>
+
+    <update id="updateByModelId">
+        update tc_flow
+            set flow_key=#{dto.flowKey},
+            flow_name=#{dto.flowName}
+        where
+        model_id=#{dto.modelId}
+    </update>
+
+    <select id="findList" resultType="com.tools.center.vo.FlowVO">
+        select
+         id,
+         model_id,
+         flow_id,
+         flow_name,
+         flow_key,
+         version,
+         date_format(updated_time, '%Y-%m-%d %H:%i:%s') as updatedTime,
+         state
+         from tc_flow
+         where
+         1=1
+         <if test="name !=null and name!='' ">
+             and flow_name like concat('%',#{name},'%')
+         </if>
+         order by created_time desc
+    </select>
+    <select id="getByIdFlow" resultType="com.tools.center.vo.FlowVO">
+        select
+         id,
+         model_id,
+         flow_id,
+         flow_name,
+         flow_key,
+         date_format(updated_time, '%Y-%m-%d %H:%i:%s') as updatedTime,
+         version,
+         state
+         from tc_flow where id=#{id}
+    </select>
+    <select id="findKey" resultType="com.tools.center.vo.FlowVO">
+        select
+         id,
+         flow_key
+         from tc_flow where model_id=#{id}
+    </select>
+</mapper>

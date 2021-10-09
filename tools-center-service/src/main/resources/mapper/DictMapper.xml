@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tools.center.mapper.DictMapper">
+
+
+    <select id="getKey" resultType="com.tools.center.vo.DictVO">
+        select id,sys_key,sys_val,type,status from tc_dict where deleted=0 and sys_key=#{key}
+    </select>
+</mapper>

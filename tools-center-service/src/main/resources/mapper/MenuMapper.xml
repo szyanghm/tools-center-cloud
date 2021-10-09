@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tools.center.mapper.MenuMapper">
+
+    <select id="findMenuList" resultType="com.tools.center.vo.MenuVO">
+            SELECT
+                DISTINCT(m.id),
+                m.parent_id,
+                m.`name`,
+                m.`level`,
+                m.sort,
+                m.path
+            FROM
+                tc_menu m
+            INNER JOIN tc_menu_role mr ON mr.menu_id = m.id
+            INNER JOIN tc_roles r ON mr.role_id = r.id
+            WHERE
+                1=1
+                <if test="roles!=null and roles.size>0">
+                    and r.`code` in
+                <foreach collection="roles" item="items" open="(" separator="," close=")">
+                    #{items}
+                </foreach>
+                </if>
+            ORDER BY
+                m.`level`,
+                m.sort
+    </select>
+    <select id="getByIdList" resultType="com.tools.center.vo.MenuVO">
+        select
+         id,parent_id,`name`,`level`,sort,path from tc_menu
+        where parent_id =#{id} order by sort
+    </select>
+</mapper>
