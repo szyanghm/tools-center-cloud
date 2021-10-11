@@ -1,8 +1,8 @@
 node {
    //git凭证id
-   def git_auth = "f8d39dac-66a0-4702-9e17-c444fada241b"
+   def git_auth = "7a2a6e76-49ec-4ec5-8c59-5b2284e27ee0"
    //git的url地址
-   def git_url = "git@gitee.com:haimingyang/tools-center-cloud.git"
+   def git_url = "git@github.com:szyanghm/tools-center-cloud.git"
    stage('拉取代码') {
       checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], extensions: [], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "$git_url"]]])
    }
