@@ -16,5 +16,4 @@ node {
       sh "mvn -f ${project_name} clean package dockerfile:build"
    }
 
-
 }
