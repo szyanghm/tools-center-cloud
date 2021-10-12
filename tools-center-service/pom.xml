@@ -18,6 +18,8 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>2020.0.3</spring-cloud.version>
+		<docker.image.prefix>my_docker-repo</docker.image.prefix>
+		<docker.image.url>registry.cn-shenzhen.aliyuncs.com</docker.image.url>
 	</properties>
 
 	<dependencies>
@@ -83,7 +85,8 @@
 				<artifactId>dockerfile-maven-plugin</artifactId>
 				<version>1.3.6</version>
 				<configuration>
-					<repository>${project.artifactId}</repository>
+					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+					<repository>${docker.image.url}/${docker.image.prefix}/${project.artifactId}</repository>
 					<buildArgs>
 						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
 					</buildArgs>
