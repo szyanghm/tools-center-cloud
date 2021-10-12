@@ -13,7 +13,7 @@ node {
       sh "mvn -f tools-center-contract clean install"
    }
    stage('编译，打包微服务工程') {
-      sh "mvn -f ${project_name} clean package dockerfile:build"
+      sh "mvn -f ${project_name} clean package dockerfile:build -DpushImage"
    }
 
 }
