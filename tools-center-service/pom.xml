@@ -81,7 +81,7 @@
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>dockerfile-maven-plugin</artifactId>
-				<version>1.3.6</version>
+				<version>1.4.10</version>
 				<configuration>
 					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
 					<repository>${project.artifactId}</repository>
