@@ -86,7 +86,7 @@
 				<version>1.4.10</version>
 				<configuration>
 					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
-					<repository>${docker.repository.registry}/${docker.repository.namespace}/${project.artifactId}</repository>
+					<repository>${docker.repository.registry}/${docker.repository.namespace}/tools-center-cloud</repository>
 					<buildArgs>
 						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
 					</buildArgs>
