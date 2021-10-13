@@ -13,7 +13,7 @@ node {
       sh "mvn -f tools-center-contract clean install"
    }
    stage('编译，打包微服务工程') {
-      sh "docker rmi \$(docker images -f 'dangling=true' -q)"
+      docker rmi [\$(docker images -f 'dangling=true' -q)]
       sh "mvn -f ${project_name} clean deploy -Dmaven.deploy.skip=true"
    }
 
