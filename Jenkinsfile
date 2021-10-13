@@ -5,9 +5,6 @@ node {
    def git_url = "git@github.com:szyanghm/tools-center-cloud.git"
    def imageNone = "dangling=true"
    def str = "\$(docker images -f ${imageNone} -q)"
-   stage('删除none旧版本docker镜像') {
-      sh "docker images --quiet --filter=dangling=true | xargs --no-run-if-empty docker rmi"
-   }
    stage('拉取代码') {
       checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], extensions: [], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_url}"]]])
    }
@@ -19,6 +16,9 @@ node {
    }
    stage('编译，打包微服务工程') {
       sh "mvn -f ${project_name} clean deploy -Dmaven.deploy.skip=true"
+   }
+   stage('删除none旧版本docker镜像') {
+      sh "docker images --quiet --filter=dangling=true | xargs --no-run-if-empty docker rmi"
    }
 
 }
