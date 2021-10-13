@@ -4,7 +4,10 @@ node {
    //git的url地址
    def git_url = "git@github.com:szyanghm/tools-center-cloud.git"
    def imageNone = "dangling=true"
-   def str = "'\$(docker images -f "${imageNone}" -q)'"
+   def str = "\$(docker images -f ${imageNone} -q)"
+   stage('删除none旧版本docker镜像') {
+      sh "docker rmi ${str}"
+   }
    stage('拉取代码') {
       checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], extensions: [], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_url}"]]])
    }
@@ -15,7 +18,6 @@ node {
       sh "mvn -f tools-center-contract clean install"
    }
    stage('编译，打包微服务工程') {
-      sh "docker rmi ${str}"
       sh "mvn -f ${project_name} clean deploy -Dmaven.deploy.skip=true"
    }
 
