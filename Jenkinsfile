@@ -14,7 +14,7 @@ node {
       sh "mvn -f tools-center-contract clean install"
    }
    stage('编译，打包微服务工程') {
-      docker rmi /$(docker images -f "${imageNone}" -q)
+      docker rmi /$(docker images -f '${imageNone}' -q)
       sh "mvn -f ${project_name} clean deploy -Dmaven.deploy.skip=true"
    }
 
