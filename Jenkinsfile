@@ -6,7 +6,7 @@ node {
    def imageNone = "dangling=true"
    def str = "\$(docker images -f ${imageNone} -q)"
    stage('删除none旧版本docker镜像') {
-      sh "docker rmi ${str}"
+      sh "docker images --quiet --filter=dangling=true | xargs --no-run-if-empty docker rmi"
    }
    stage('拉取代码') {
       checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], extensions: [], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_url}"]]])
