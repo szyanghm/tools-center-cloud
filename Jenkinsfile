@@ -29,8 +29,8 @@ node {
 	     withCredentials([usernamePassword(credentialsId: ${aliyun_auth}, passwordVariable: 'password', usernameVariable: 'username')]) {
 	        //登录到阿里云镜像仓库
 	        sh "docker login --username=${username} --password=${password} ${aliyun_registry_url}"
-		    sh "docker tag ${currentProjectName} ${aliyun_registry_url}/{aliyun_registry_namespace}/${aliyun_registry_name}"
-		    sh "docker push ${aliyun_registry_url}/{aliyun_registry_namespace}/${aliyun_registry_name}"
+		    sh "docker tag ${currentProjectName} ${aliyun_registry_url}/${aliyun_registry_namespace}/${aliyun_registry_name}"
+		    sh "docker push ${aliyun_registry_url}/${aliyun_registry_namespace}/${aliyun_registry_name}"
 		    sh "echo 镜像上传成功!"
 	     }
 	  }
