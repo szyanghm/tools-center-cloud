@@ -5,7 +5,6 @@ node {
    def git_url = "git@github.com:szyanghm/tools-center-cloud.git"
    def imageNone = "dangling=true"
    def str = "\$(docker images -f ${imageNone} -q)"
-   def projectName = "tools-center-service"
    //stage('拉取代码') {
       //checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], extensions: [], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_url}"]]])
    //}
@@ -22,7 +21,7 @@ node {
 	  //sh "docker stop ${project_name}"
 	  //sh "docker rm ${project_name}"
 	  def prot = "8081"
-	  if(${project_name}==${projectName}){
+	  if(${project_name}=="tools-center-service"){
           prot = "18080"
       }
 	  sh "docker run --name ${project_name} -p prot:prot -d ${project_name}:latest"
