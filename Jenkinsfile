@@ -20,14 +20,9 @@ node {
    stage('停止，删除旧容器,启动镜像容器') {
 	  //sh "docker stop ${project_name}"
 	  //sh "docker rm ${project_name}"
-	  def prot = "8081"
-	  def str = /${project_name}
-	  def str2 = "tools-center-service" 
-	  if(str == str2) { 
-	    prot = "18080"
-	  }
+
 	  
-	  sh "docker run --name ${project_name} -p prot:prot -d ${project_name}:latest"
+	  sh "docker run --name ${project_name} -d ${project_name}:latest"
    }
    stage('删除none旧版本docker镜像') {
       sh "docker images --quiet --filter=dangling=true | xargs --no-run-if-empty docker rmi"
