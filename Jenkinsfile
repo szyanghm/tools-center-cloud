@@ -31,7 +31,7 @@ node {
 	        sh "docker login --username=${username} --password=${password} ${aliyun_registry_url}"
 		    sh "docker tag ${currentProjectName} ${aliyun_registry_url}/${aliyun_registry_namespace}/${aliyun_registry_name}"
 		    sh "docker push ${aliyun_registry_url}/${aliyun_registry_namespace}/${aliyun_registry_name}"
-		    sh "echo 镜像上传成功!"
+		    sh "echo 镜像上传成功"
 	     }
 	  }
 
