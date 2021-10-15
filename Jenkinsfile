@@ -14,12 +14,14 @@ node {
    stage('编译，安装公共子工程') {
       sh "mvn -f tools-center-common clean install"
    }
-   stage('编译，安装feign工程') {
-      sh "mvn -f tools-center-contract clean install"
-   }
+   //stage('编译，安装feign工程') {
+      //sh "mvn -f tools-center-contract clean install"
+   //}
    stage('编译，打包微服务工程') {
+	  def a = ${selectedProjectNames}.length
+	  sh "echo 长度:${a}"
       for(int i=0;i<selectedProjectNames.length;i++){
-	     def projectInfo = selectedProjectNames[i]
+	     def projectInfo = selectedProjectNames[i];
 		 def currentProjectName = "${projectInfo}".split("@")[0]
 		 def currentProjectPort = "${projectInfo}".split("@")[1]
 		 	  //构建镜像
