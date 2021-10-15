@@ -18,8 +18,6 @@ node {
       //sh "mvn -f tools-center-contract clean install"
    //}
    stage('编译，打包微服务工程') {
-	  def a = ${selectedProjectNames}.length
-	  sh "echo 长度:${a}"
       for(int i=0;i<selectedProjectNames.length;i++){
 	     def projectInfo = selectedProjectNames[i];
 		 def currentProjectName = "${projectInfo}".split("@")[0]
