@@ -21,7 +21,7 @@ node {
 	  //sh "docker stop ${project_name}"
 	  //sh "docker rm ${project_name}"
 	  def prot = "8081"
-	  def str = ${project_name}
+	  def str = /${project_name}
 	  def str2 = "tools-center-service" 
 	  if(str == str2) { 
 	    prot = "18080"
