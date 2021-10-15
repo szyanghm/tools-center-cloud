@@ -22,19 +22,19 @@ node {
 	     def projectInfo = selectedProjectNames[i]
 		 def currentProjectName = "${projectInfo}".split("@")[0]
 		 def currentProjectPort = "${projectInfo}".split("@")[1]
+		 	  //构建镜像
+	     //sh "mvn -f ${currentProjectName} clean deploy -Dmaven.deploy.skip=true"
+	     sh "mvn -f ${currentProjectName} clean package dockerfile:build"
+	     //通过jenkins凭证来配置docker镜像仓库账户密码
+	     withCredentials([usernamePassword(credentialsId: ${aliyun_auth}, passwordVariable: 'password', usernameVariable: 'username')]) {
+	        //登录到阿里云镜像仓库
+	        sh "docker login --username=${username} --password=${password} ${aliyun_registry_url}"
+		    sh "docker tag ${currentProjectName} ${aliyun_registry_url}/{aliyun_registry_namespace}/${aliyun_registry_name}"
+		    sh "docker push ${aliyun_registry_url}/{aliyun_registry_namespace}/${aliyun_registry_name}"
+		    sh "echo 镜像上传成功!"
+	     }
 	  }
-	  //构建镜像
-	  //sh "mvn -f ${currentProjectName} clean deploy -Dmaven.deploy.skip=true"
-	  sh "mvn -f ${currentProjectName} clean package dockerfile:build"
-	  //通过jenkins凭证来配置docker镜像仓库账户密码
-	  withCredentials([usernamePassword(credentialsId: ${aliyun_auth}, passwordVariable: 'password', usernameVariable: 'username')]) {
-	     //登录到阿里云镜像仓库
-	     sh "docker login --username=${username} --password=${password} ${aliyun_registry_url}"
-		 sh "docker tag ${currentProjectName} ${aliyun_registry_url}/{aliyun_registry_namespace}/${aliyun_registry_name}"
-		 sh "docker push ${aliyun_registry_url}/{aliyun_registry_namespace}/${aliyun_registry_name}"
-		 sh "echo 镜像上传成功!"
-	  }
-     
+
    }
    stage('停止，删除旧容器,启动镜像容器') {
 	  //sh "docker stop ${project_name}"
