@@ -6,7 +6,6 @@ node {
    def aliyun_auth = "927ca715-da19-449c-8bd1-6c2c4b241411"
    def aliyun_registry_url = "registry.cn-shenzhen.aliyuncs.com"
    def aliyun_registry_namespace = "my_docker-repo"
-   def aliyun_registry_name = "tools-center-cloud"
    def selectedProjectNames = "${project_name}".split(",")
    stage('拉取代码') {
       checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], extensions: [], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_url}"]]])
@@ -29,8 +28,8 @@ node {
 	     withCredentials([usernamePassword(credentialsId: "${aliyun_auth}", passwordVariable: 'password', usernameVariable: 'username')]) {
 	        //登录到阿里云镜像仓库
 	        sh "docker login --username=${username} --password=${password} ${aliyun_registry_url}"
-		    sh "docker tag ${currentProjectName} ${aliyun_registry_url}/${aliyun_registry_namespace}/${aliyun_registry_name}"
-		    sh "docker push ${aliyun_registry_url}/${aliyun_registry_namespace}/${aliyun_registry_name}"
+		    sh "docker tag ${currentProjectName} ${aliyun_registry_url}/${aliyun_registry_namespace}/${currentProjectName}"
+		    sh "docker push ${aliyun_registry_url}/${aliyun_registry_namespace}/${currentProjectName}"
 		    sh "echo 镜像上传成功"
 	     }
 	  }
