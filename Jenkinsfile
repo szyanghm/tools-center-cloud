@@ -6,23 +6,23 @@ node {
    def imageNone = "dangling=true"
    def str = "\$(docker images -f ${imageNone} -q)"
    def projectName = "tools-center-service"
-   stage('拉取代码') {
-      checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], extensions: [], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_url}"]]])
-   }
-   stage('编译，安装公共子工程') {
-      sh "mvn -f tools-center-common clean install"
-   }
-   stage('编译，安装feign工程') {
-      sh "mvn -f tools-center-contract clean install"
-   }
-   stage('编译，打包微服务工程') {
-      sh "mvn -f ${project_name} clean deploy -Dmaven.deploy.skip=true"
-   }
+   //stage('拉取代码') {
+      //checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], extensions: [], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_url}"]]])
+   //}
+   //stage('编译，安装公共子工程') {
+      //sh "mvn -f tools-center-common clean install"
+   //}
+   //stage('编译，安装feign工程') {
+      //sh "mvn -f tools-center-contract clean install"
+   //}
+   //stage('编译，打包微服务工程') {
+      //sh "mvn -f ${project_name} clean deploy -Dmaven.deploy.skip=true"
+   //}
    stage('停止，删除旧容器,启动镜像容器') {
 	  sh "docker stop ${project_name}"
 	  sh "docker rm ${project_name}"
 	  def prot = "8081"
-	  if(${project_name}.contains(${projectName})){
+	  if(${project_name}==${projectName}){
           prot = "18080"
       }
 	  sh "docker run --name ${project_name} -p prot:prot -d ${project_name}:latest"
