@@ -7,7 +7,7 @@ node {
    def aliyun_registry_url = "registry.cn-shenzhen.aliyuncs.com"
    def aliyun_registry_namespace = "my_docker-repo"
    def aliyun_registry_name = "tools-center-cloud"
-   def selectedProjectNames = "{project_name}".split(",")
+   def selectedProjectNames = "${project_name}".split(",")
    stage('拉取代码') {
       checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], extensions: [], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_url}"]]])
    }
