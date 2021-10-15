@@ -18,8 +18,6 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>2020.0.3</spring-cloud.version>
-		<docker.repository.registry>registry.cn-shenzhen.aliyuncs.com</docker.repository.registry>
-        <docker.repository.namespace>my_docker-repo</docker.repository.namespace>
 	</properties>
 
 	<dependencies>
@@ -85,23 +83,11 @@
 				<artifactId>dockerfile-maven-plugin</artifactId>
 				<version>1.4.10</version>
 				<configuration>
-					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
-					<repository>${docker.repository.registry}/${docker.repository.namespace}/tools-center-cloud</repository>
+					<repository>${project.artifactId}</repository>
 					<buildArgs>
 						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
 					</buildArgs>
 				</configuration>
-				<executions>
-                    <execution>
-                        <id>default</id>
-                        <goals>
-                            <goal>build</goal>
-                            <goal>push</goal>
-                        </goals>
-                        <configuration>
-                        </configuration>
-                    </execution>
-                </executions>
 			</plugin>
 		</plugins>
 	</build>
