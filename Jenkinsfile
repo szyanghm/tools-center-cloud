@@ -21,7 +21,7 @@ node {
 	  //sh "docker stop ${project_name}"
 	  //sh "docker rm ${project_name}"
 	  def prot = "8081"
-	  if(${project_name}=="tools-center-service"){
+	  if(/${project_name}=="tools-center-service"){
           prot = "18080"
       }
 	  sh "docker run --name ${project_name} -p prot:prot -d ${project_name}:latest"
