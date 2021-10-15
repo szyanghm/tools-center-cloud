@@ -21,9 +21,14 @@ node {
 	  //sh "docker stop ${project_name}"
 	  //sh "docker rm ${project_name}"
 	  def prot = "8081"
-	  if(/${project_name}=="tools-center-service"){
-          prot = "18080"
-      }
+	  String str = ${project_name}
+	  compareString(str)
+	  def compareString(String str){
+	    def str2 = "tools-center-service" 
+		if( str.toUpperCase() == str2.toUpperCase()) { 
+		  prot = "18080"
+		}
+	  }
 	  sh "docker run --name ${project_name} -p prot:prot -d ${project_name}:latest"
    }
    stage('删除none旧版本docker镜像') {
