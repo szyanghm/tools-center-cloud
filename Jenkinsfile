@@ -19,8 +19,8 @@ node {
       //sh "mvn -f ${project_name} clean deploy -Dmaven.deploy.skip=true"
    //}
    stage('停止，删除旧容器,启动镜像容器') {
-	  sh "docker stop ${project_name}"
-	  sh "docker rm ${project_name}"
+	  //sh "docker stop ${project_name}"
+	  //sh "docker rm ${project_name}"
 	  def prot = "8081"
 	  if(${project_name}==${projectName}){
           prot = "18080"
