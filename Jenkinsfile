@@ -26,7 +26,7 @@ node {
 	     //sh "mvn -f ${currentProjectName} clean deploy -Dmaven.deploy.skip=true"
 	     sh "mvn -f ${currentProjectName} clean package dockerfile:build"
 	     //通过jenkins凭证来配置docker镜像仓库账户密码
-	     withCredentials([usernamePassword(credentialsId: ${aliyun_auth}, passwordVariable: 'password', usernameVariable: 'username')]) {
+	     withCredentials([usernamePassword(credentialsId: "${aliyun_auth}", passwordVariable: 'password', usernameVariable: 'username')]) {
 	        //登录到阿里云镜像仓库
 	        sh "docker login --username=${username} --password=${password} ${aliyun_registry_url}"
 		    sh "docker tag ${currentProjectName} ${aliyun_registry_url}/${aliyun_registry_namespace}/${aliyun_registry_name}"
