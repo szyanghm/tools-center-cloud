@@ -41,16 +41,10 @@ node {
 		 //遍历所有服务器，分别进行部署
 		 for(int j=0;j<selectedServers.length;j++){
 			def serverName = selectedServers[j]
-			sshPublisher(publishers: [sshPublisherDesc(configName: "${serverName}", transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: "/deploy.sh $aliyun_registry_url $aliyun_registry_namespace $project_name $port $username $password", execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+			sshPublisher(publishers: [sshPublisherDesc(configName: "${serverName}", transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: "/data/deploy.sh $aliyun_registry_url $aliyun_registry_namespace $project_name $port $username $password", execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 		 }
 	  }
 
-   }
-   stage('停止，删除旧容器,启动镜像容器') {
-	  //sh "docker stop ${project_name}"
-	  //sh "docker rm ${project_name}"
-	 
-	  //sh "docker run --name ${project_name} -d ${project_name}:latest"
    }
    stage('删除none旧版本docker镜像') {
       sh "docker images --quiet --filter=dangling=true | xargs --no-run-if-empty docker rmi"
