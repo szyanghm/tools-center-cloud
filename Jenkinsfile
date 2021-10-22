@@ -38,13 +38,12 @@ node {
 		    sh "docker tag ${project_name} ${aliyun_registry_url}/${aliyun_registry_namespace}/${project_name}"
 		    sh "docker push ${aliyun_registry_url}/${aliyun_registry_namespace}/${project_name}"
 		    sh "echo 镜像上传成功!"
-			//遍历所有服务器，分别进行部署
-			for(int j=0;j<selectedServers.length;j++){
-			   def serverName = selectedServers[j]
-			   sshPublisher(publishers: [sshPublisherDesc(configName: "${serverName}", transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: "/data/deploy.sh $aliyun_registry_url $aliyun_registry_namespace $project_name $port $username", execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-			}
 	     }
-		
+		 //遍历所有服务器，分别进行部署
+		 for(int j=0;j<selectedServers.length;j++){
+		    def serverName = selectedServers[j]
+		    sshPublisher(publishers: [sshPublisherDesc(configName: "${serverName}", transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: "/data/deploy.sh $aliyun_registry_url $aliyun_registry_namespace $project_name $port", execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+		 }
 	  }
 
    }
